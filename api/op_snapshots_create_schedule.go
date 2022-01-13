@@ -9,7 +9,7 @@ import (
 )
 
 // Create a snapshot.
-func (c *defaultYBClientAPI) SnapshotsCreateSchedule(opConfig *configs.OpSnapshotCreateScheduleConfig) (*ybApi.CreateSnapshotScheduleResponsePB, error) {
+func (c *defaultRpcAPI) SnapshotsCreateSchedule(opConfig *configs.OpSnapshotCreateScheduleConfig) (*ybApi.CreateSnapshotScheduleResponsePB, error) {
 
 	payload := &ybApi.CreateSnapshotScheduleRequestPB{
 		Options: &ybApi.SnapshotScheduleOptionsPB{

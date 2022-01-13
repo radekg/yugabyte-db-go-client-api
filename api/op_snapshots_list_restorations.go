@@ -7,7 +7,7 @@ import (
 )
 
 // List snapshots.
-func (c *defaultYBClientAPI) SnapshotsListRestorations(opConfig *configs.OpSnapshotListRestorationsConfig) (*ybApi.ListSnapshotRestorationsResponsePB, error) {
+func (c *defaultRpcAPI) SnapshotsListRestorations(opConfig *configs.OpSnapshotListRestorationsConfig) (*ybApi.ListSnapshotRestorationsResponsePB, error) {
 
 	useSnapshotID := []byte{}
 	useRestorationID := []byte{}

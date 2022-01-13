@@ -11,7 +11,7 @@ import (
 )
 
 // Create a snapshot.
-func (c *defaultYBClientAPI) SnapshotsCreate(opConfig *configs.OpSnapshotCreateConfig) (*ybApi.CreateSnapshotResponsePB, error) {
+func (c *defaultRpcAPI) SnapshotsCreate(opConfig *configs.OpSnapshotCreateConfig) (*ybApi.CreateSnapshotResponsePB, error) {
 
 	if len(opConfig.ScheduleID) > 0 {
 		// short circuit
@@ -46,7 +46,7 @@ func (c *defaultYBClientAPI) SnapshotsCreate(opConfig *configs.OpSnapshotCreateC
 	}
 }
 
-func createSnapshotYCQL(c *defaultYBClientAPI, opConfig *configs.OpSnapshotCreateConfig, ns *parsedKeyspace) (*ybApi.CreateSnapshotResponsePB, error) {
+func createSnapshotYCQL(c *defaultRpcAPI, opConfig *configs.OpSnapshotCreateConfig, ns *parsedKeyspace) (*ybApi.CreateSnapshotResponsePB, error) {
 	tableIdentifiers := []*ybApi.TableIdentifierPB{}
 	for _, tableUUID := range opConfig.TableUUIDs {
 		tableIdentifiers = append(tableIdentifiers, &ybApi.TableIdentifierPB{
@@ -94,7 +94,7 @@ func createSnapshotYCQL(c *defaultYBClientAPI, opConfig *configs.OpSnapshotCreat
 	return responsePayload, clientErrors.NewMasterError(responsePayload.Error)
 }
 
-func createSnapshotYSQL(c *defaultYBClientAPI, opConfig *configs.OpSnapshotCreateConfig, ns *parsedKeyspace) (*ybApi.CreateSnapshotResponsePB, error) {
+func createSnapshotYSQL(c *defaultRpcAPI, opConfig *configs.OpSnapshotCreateConfig, ns *parsedKeyspace) (*ybApi.CreateSnapshotResponsePB, error) {
 	tablesPayload, err := c.ListTables(&configs.OpListTablesConfig{
 		Keyspace:            opConfig.Keyspace,
 		ExcludeSystemTables: true,                                  // https://github.com/yugabyte/yugabyte-db/blob/d4d5688147734d1a36bbe58430f35ba4db2770f1/ent/src/yb/tools/yb-admin_client_ent.cc#L262

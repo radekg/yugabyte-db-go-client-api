@@ -8,7 +8,7 @@ import (
 )
 
 // ListMasters returns a list of masters or an error if call failed.
-func (c *defaultYBClientAPI) LeaderStepDown(opConfig *configs.OpLeaderStepDownConfig) (*ybApi.LeaderStepDownResponsePB, error) {
+func (c *defaultRpcAPI) LeaderStepDown(opConfig *configs.OpLeaderStepDownConfig) (*ybApi.LeaderStepDownResponsePB, error) {
 	payload := &ybApi.LeaderStepDownRequestPB{
 		DestUuid:                  []byte(opConfig.DestUUID),
 		TabletId:                  []byte(opConfig.TabletID),

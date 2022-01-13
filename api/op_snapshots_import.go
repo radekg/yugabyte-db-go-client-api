@@ -45,7 +45,7 @@ func (tn *ybTableName) hasTable() bool {
 }
 
 // Pre-process snapshot import metadata file from input bytes.
-func (c *defaultYBClientAPI) PreProcessSnapshotsImportFromBytes(opConfig *configs.OpSnapshotImportConfig, rawProtoBytes []byte) (*ybApi.ImportSnapshotMetaRequestPB, error) {
+func (c *defaultRpcAPI) PreProcessSnapshotsImportFromBytes(opConfig *configs.OpSnapshotImportConfig, rawProtoBytes []byte) (*ybApi.ImportSnapshotMetaRequestPB, error) {
 
 	givenKeyspace := ""
 	if opConfig.Keyspace != "" {
@@ -158,7 +158,7 @@ func (c *defaultYBClientAPI) PreProcessSnapshotsImportFromBytes(opConfig *config
 }
 
 // Pre-process snapshot import metadata file.
-func (c *defaultYBClientAPI) PreProcessSnapshotsImportFromFile(opConfig *configs.OpSnapshotImportConfig) (*ybApi.ImportSnapshotMetaRequestPB, error) {
+func (c *defaultRpcAPI) PreProcessSnapshotsImportFromFile(opConfig *configs.OpSnapshotImportConfig) (*ybApi.ImportSnapshotMetaRequestPB, error) {
 	statResult, err := os.Stat(opConfig.FilePath)
 	if err != nil {
 		return nil, err
@@ -176,7 +176,7 @@ func (c *defaultYBClientAPI) PreProcessSnapshotsImportFromFile(opConfig *configs
 }
 
 // Import snapshot.
-func (c *defaultYBClientAPI) SnapshotsImport(opConfig *configs.OpSnapshotImportConfig) (*ybApi.ImportSnapshotMetaResponsePB, error) {
+func (c *defaultRpcAPI) SnapshotsImport(opConfig *configs.OpSnapshotImportConfig) (*ybApi.ImportSnapshotMetaResponsePB, error) {
 
 	payload, err := c.PreProcessSnapshotsImportFromFile(opConfig)
 	if err != nil {

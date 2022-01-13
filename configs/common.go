@@ -51,17 +51,15 @@ func (c *CliConfig) FlagSet() *pflag.FlagSet {
 	return c.flagSet
 }
 
-// NewYBClientConfigFromCliConfig constructs YB client config from the cli config.
-func NewYBClientConfigFromCliConfig(hostPort string, input *CliConfig) (*ybClientConfigs.YBClientConfig, error) {
-	tlsConfig, err := input.TLSConfig()
-	if err != nil {
-		return nil, err
-	}
+// ToYBClientConfig converts CLI config to client config.
+func (c *CliConfig) ToYBClientConfig() *ybClientConfigs.YBClientConfig {
 	return &ybClientConfigs.YBClientConfig{
-		MasterHostPort: hostPort,
-		TLSConfig:      tlsConfig,
-		OpTimeout:      uint32(input.OpTimeout.Milliseconds()),
-	}, nil
+		MasterHostPort:    c.MasterHostPort,
+		OpTimeout:         c.OpTimeout,
+		TLSCaCertFilePath: c.TLSCaCertFilePath,
+		TLSCertFilePath:   c.TLSCertFilePath,
+		TLSKeyFilePath:    c.TLSKeyFilePath,
+	}
 }
 
 // TLSConfig returns TLS config if TLS is configured.

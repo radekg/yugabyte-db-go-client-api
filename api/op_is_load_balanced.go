@@ -8,7 +8,7 @@ import (
 )
 
 // IsLoadBalanced returns a list of masters or an error if call failed.
-func (c *defaultYBClientAPI) IsLoadBalanced(opConfig *configs.OpIsLoadBalancedConfig) (*ybApi.IsLoadBalancedResponsePB, error) {
+func (c *defaultRpcAPI) IsLoadBalanced(opConfig *configs.OpIsLoadBalancedConfig) (*ybApi.IsLoadBalancedResponsePB, error) {
 	payload := &ybApi.IsLoadBalancedRequestPB{
 		ExpectedNumServers: func() *int32 {
 			if opConfig.ExpectedNumServers > 0 {

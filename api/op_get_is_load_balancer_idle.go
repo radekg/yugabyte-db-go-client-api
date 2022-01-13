@@ -6,7 +6,7 @@ import (
 )
 
 // GetIsLoadBalancerIdle finds out if the load balancer is idle.
-func (c *defaultYBClientAPI) GetIsLoadBalancerIdle() (*ybApi.IsLoadBalancerIdleResponsePB, error) {
+func (c *defaultRpcAPI) GetIsLoadBalancerIdle() (*ybApi.IsLoadBalancerIdleResponsePB, error) {
 	payload := &ybApi.IsLoadBalancerIdleRequestPB{}
 	responsePayload := &ybApi.IsLoadBalancerIdleResponsePB{}
 	if err := c.connectedClient.Execute(payload, responsePayload); err != nil {

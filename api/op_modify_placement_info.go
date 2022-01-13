@@ -9,7 +9,7 @@ import (
 )
 
 // Modifies the placement information (cloud, region, and zone) for a deployment.
-func (c *defaultYBClientAPI) ModifyPlacementInfo(opConfig *configs.OpModifyPlacementInfoConfig) (*ybApi.ChangeMasterClusterConfigResponsePB, error) {
+func (c *defaultRpcAPI) ModifyPlacementInfo(opConfig *configs.OpModifyPlacementInfoConfig) (*ybApi.ChangeMasterClusterConfigResponsePB, error) {
 
 	// Get current config:
 	payloadCurrent := &ybApi.GetMasterClusterConfigRequestPB{}

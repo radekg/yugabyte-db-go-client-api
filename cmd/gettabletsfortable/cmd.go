@@ -7,6 +7,7 @@ import (
 
 	"github.com/radekg/yugabyte-db-go-client-api/api"
 	"github.com/radekg/yugabyte-db-go-client-api/configs"
+	"github.com/radekg/yugabyte-db-go-client/client"
 	"github.com/spf13/cobra"
 )
 
@@ -49,14 +50,16 @@ func processCommand() int {
 		}
 	}
 
-	cliClient, err := api.MasterLeaderConnectedClient(commandConfig, logger.Named("client"))
-	if err != nil {
-		logger.Error("could not connect to a leader master", "reason", err)
+	c := client.NewYBClient(commandConfig.ToYBClientConfig()).WithLogger(logger)
+	if err := c.Connect(); err != nil {
+		logger.Error("could not initialize api client", "reason", err)
 		return 1
 	}
-	defer cliClient.Close()
+	defer c.Close()
 
-	responsePayload, err := cliClient.GetTabletsForTable(opConfig)
+	rpcAPI := api.NewRpcAPI(c, logger)
+
+	responsePayload, err := rpcAPI.GetTabletsForTable(opConfig)
 	if err != nil {
 		// if not found, handle an error:
 		// code:OBJECT_NOT_FOUND status:{code:NOT_FOUND message:"Table with identifier  not found: OBJECT_NOT_FOUND" source_file:"../../src/yb/master/catalog_manager.cc" source_line:3803 errors:"\t\x03\x00\x00\x00\x00"}

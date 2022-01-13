@@ -9,7 +9,7 @@ import (
 	ybApi "github.com/radekg/yugabyte-db-go-proto/v2/yb/api"
 )
 
-func (c *defaultYBClientAPI) getTableSchemaByUUID(tableID []byte) (*ybApi.GetTableSchemaResponsePB, error) {
+func (c *defaultRpcAPI) getTableSchemaByUUID(tableID []byte) (*ybApi.GetTableSchemaResponsePB, error) {
 	payload := &ybApi.GetTableSchemaRequestPB{
 		Table: &ybApi.TableIdentifierPB{
 			TableId: tableID,
@@ -25,7 +25,7 @@ func (c *defaultYBClientAPI) getTableSchemaByUUID(tableID []byte) (*ybApi.GetTab
 	return responsePayload, nil
 }
 
-func (c *defaultYBClientAPI) getTabletsForTableByUUID(tableID []byte, opConfig *configs.OpGetTableLocationsConfig) (*ybApi.GetTableLocationsResponsePB, error) {
+func (c *defaultRpcAPI) getTabletsForTableByUUID(tableID []byte, opConfig *configs.OpGetTableLocationsConfig) (*ybApi.GetTableLocationsResponsePB, error) {
 	payload := &ybApi.GetTableLocationsRequestPB{
 		Table: &ybApi.TableIdentifierPB{
 			TableId: tableID,
@@ -48,7 +48,7 @@ func (c *defaultYBClientAPI) getTabletsForTableByUUID(tableID []byte, opConfig *
 // ==
 // Table lookup by name
 
-func (c *defaultYBClientAPI) lookupTableIDsByNames(keyspace string, names []string) (map[string][]byte, error) {
+func (c *defaultRpcAPI) lookupTableIDsByNames(keyspace string, names []string) (map[string][]byte, error) {
 
 	parsedKeyspace := parseKeyspace(keyspace)
 	payloadListTables := &ybApi.ListTablesRequestPB{
@@ -81,7 +81,7 @@ func (c *defaultYBClientAPI) lookupTableIDsByNames(keyspace string, names []stri
 	return results, nil
 }
 
-func (c *defaultYBClientAPI) lookupTableByName(keyspace, name string) (*ybApi.GetTableSchemaResponsePB, error) {
+func (c *defaultRpcAPI) lookupTableByName(keyspace, name string) (*ybApi.GetTableSchemaResponsePB, error) {
 	parsedKeyspace := parseKeyspace(keyspace)
 	payloadListTables := &ybApi.ListTablesRequestPB{
 		Namespace: parsedKeyspace.toProtoKeyspace(),

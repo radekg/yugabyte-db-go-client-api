@@ -10,7 +10,7 @@ import (
 )
 
 // Sets the preferred availability zones (AZs) and regions.
-func (c *defaultYBClientAPI) SetPreferredZones(opConfig *configs.OpSetPreferredZonesConfig) (*ybApi.SetPreferredZonesResponsePB, error) {
+func (c *defaultRpcAPI) SetPreferredZones(opConfig *configs.OpSetPreferredZonesConfig) (*ybApi.SetPreferredZonesResponsePB, error) {
 	zones := []*ybApi.CloudInfoPB{}
 	for _, z := range opConfig.ZonesInfos {
 		zz, err := zoneInfoToCloudPB(z)

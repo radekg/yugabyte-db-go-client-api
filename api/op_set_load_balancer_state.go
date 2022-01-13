@@ -7,7 +7,7 @@ import (
 )
 
 // Set load balancer state.
-func (c *defaultYBClientAPI) SetLoadBalancerState(enable bool) (*ybApi.ChangeLoadBalancerStateResponsePB, error) {
+func (c *defaultRpcAPI) SetLoadBalancerState(enable bool) (*ybApi.ChangeLoadBalancerStateResponsePB, error) {
 	payload := &ybApi.ChangeLoadBalancerStateRequestPB{
 		IsEnabled: utils.PBool(enable),
 	}

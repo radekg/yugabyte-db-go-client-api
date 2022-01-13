@@ -7,6 +7,7 @@ import (
 
 	"github.com/radekg/yugabyte-db-go-client-api/api"
 	"github.com/radekg/yugabyte-db-go-client-api/configs"
+	"github.com/radekg/yugabyte-db-go-client/client"
 	"github.com/spf13/cobra"
 )
 
@@ -49,14 +50,16 @@ func processCommand() int {
 		}
 	}
 
-	cliClient, err := api.MasterLeaderConnectedClient(commandConfig, logger.Named("client"))
-	if err != nil {
-		logger.Error("could not connect to a leader master", "reason", err)
+	c := client.NewYBClient(commandConfig.ToYBClientConfig()).WithLogger(logger)
+	if err := c.Connect(); err != nil {
+		logger.Error("could not initialize api client", "reason", err)
 		return 1
 	}
-	defer cliClient.Close()
+	defer c.Close()
 
-	responsePayload, err := cliClient.MasterLeaderStepDown(opConfig)
+	rpcAPI := api.NewRpcAPI(c, logger)
+
+	responsePayload, err := rpcAPI.MasterLeaderStepDown(opConfig)
 	if err != nil {
 		logger.Error("failed master leader step down", "reason", err)
 		return 1

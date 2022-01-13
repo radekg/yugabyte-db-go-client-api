@@ -11,7 +11,7 @@ import (
 )
 
 // Restore schedule.
-func (c *defaultYBClientAPI) SnapshotsRestoreSchedule(opConfig *configs.OpSnapshotRestoreScheduleConfig) (*ybApi.RestoreSnapshotResponsePB, error) {
+func (c *defaultRpcAPI) SnapshotsRestoreSchedule(opConfig *configs.OpSnapshotRestoreScheduleConfig) (*ybApi.RestoreSnapshotResponsePB, error) {
 
 	restoreFixedTime, restoreDuration, err := relativetime.ParseTimeOrDuration(opConfig.RestoreTarget)
 	if err != nil {
@@ -90,7 +90,7 @@ loop:
 	})
 }
 
-func (c *defaultYBClientAPI) suitableSnapshotID(scheduleID string, restoreAt uint64) ([]byte, error) {
+func (c *defaultRpcAPI) suitableSnapshotID(scheduleID string, restoreAt uint64) ([]byte, error) {
 	for {
 
 		schedules, err := c.SnapshotsListSchedules(func() *configs.OpSnapshotListSchedulesConfig {
@@ -169,7 +169,7 @@ func (c *defaultYBClientAPI) suitableSnapshotID(scheduleID string, restoreAt uin
 	}
 }
 
-func (c *defaultYBClientAPI) snapshotSuitableForRestoreAt(entry *ybApi.SysSnapshotEntryPB, restoreAt uint64) bool {
+func (c *defaultRpcAPI) snapshotSuitableForRestoreAt(entry *ybApi.SysSnapshotEntryPB, restoreAt uint64) bool {
 	if entry.State == nil || entry.PreviousSnapshotHybridTime == nil || entry.SnapshotHybridTime == nil {
 		return false
 	}

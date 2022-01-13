@@ -14,7 +14,7 @@ import (
 const MasterTabletID = "00000000000000000000000000000000"
 
 // MasterLeaderStepDown attempts a master leader step down procedure.
-func (c *defaultYBClientAPI) MasterLeaderStepDown(opConfig *configs.OpMMasterLeaderStepdownConfig) (*ybApi.GetMasterRegistrationResponsePB, error) {
+func (c *defaultRpcAPI) MasterLeaderStepDown(opConfig *configs.OpMMasterLeaderStepdownConfig) (*ybApi.GetMasterRegistrationResponsePB, error) {
 
 	masterRegistration, err := c.GetMasterRegistration()
 	if err != nil {
