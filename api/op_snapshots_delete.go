@@ -8,7 +8,7 @@ import (
 )
 
 // Delete snapshot.
-func (c *defaultYBClientAPI) SnapshotsDelete(opConfig *configs.OpSnapshotDeleteConfig) (*ybApi.DeleteSnapshotResponsePB, error) {
+func (c *defaultRpcAPI) SnapshotsDelete(opConfig *configs.OpSnapshotDeleteConfig) (*ybApi.DeleteSnapshotResponsePB, error) {
 
 	ybDbID, err := ybdbid.TryParseFromString(opConfig.SnapshotID)
 	if err != nil {

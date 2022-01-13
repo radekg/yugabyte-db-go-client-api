@@ -6,7 +6,7 @@ import (
 )
 
 // GetLoadMoveCompletion gets the completion percentage of tablet load move from blacklisted servers.
-func (c *defaultYBClientAPI) GetLeaderBlacklistCompletion() (*ybApi.GetLoadMovePercentResponsePB, error) {
+func (c *defaultRpcAPI) GetLeaderBlacklistCompletion() (*ybApi.GetLoadMovePercentResponsePB, error) {
 	payload := &ybApi.GetLeaderBlacklistPercentRequestPB{}
 	responsePayload := &ybApi.GetLoadMovePercentResponsePB{}
 	if err := c.connectedClient.Execute(payload, responsePayload); err != nil {

@@ -6,7 +6,7 @@ import (
 	ybApi "github.com/radekg/yugabyte-db-go-proto/v2/yb/api"
 )
 
-func (c *defaultYBClientAPI) defaultServerClockResolver() (uint64, error) {
+func (c *defaultRpcAPI) defaultServerClockResolver() (uint64, error) {
 	serverClock, err := c.ServerClock()
 	if err != nil {
 		return 0, err
@@ -19,7 +19,7 @@ func (c *defaultYBClientAPI) defaultServerClockResolver() (uint64, error) {
 
 // Gets the server clock value.
 // Returned server time is represented in microseconds.
-func (c *defaultYBClientAPI) ServerClock() (*ybApi.ServerClockResponsePB, error) {
+func (c *defaultRpcAPI) ServerClock() (*ybApi.ServerClockResponsePB, error) {
 	payload := &ybApi.ServerClockRequestPB{}
 	responsePayload := &ybApi.ServerClockResponsePB{}
 	if err := c.connectedClient.Execute(payload, responsePayload); err != nil {

@@ -6,7 +6,7 @@ import (
 )
 
 // ListMasters returns a list of masters or an error if call failed.
-func (c *defaultYBClientAPI) ListMasters() (*ybApi.ListMastersResponsePB, error) {
+func (c *defaultRpcAPI) ListMasters() (*ybApi.ListMastersResponsePB, error) {
 	payload := &ybApi.ListMastersRequestPB{}
 	responsePayload := &ybApi.ListMastersResponsePB{}
 	if err := c.connectedClient.Execute(payload, responsePayload); err != nil {

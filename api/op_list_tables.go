@@ -7,7 +7,7 @@ import (
 )
 
 // ListTables returns a List all the tables in a database.
-func (c *defaultYBClientAPI) ListTables(opConfig *configs.OpListTablesConfig) (*ybApi.ListTablesResponsePB, error) {
+func (c *defaultRpcAPI) ListTables(opConfig *configs.OpListTablesConfig) (*ybApi.ListTablesResponsePB, error) {
 	payload := &ybApi.ListTablesRequestPB{
 		ExcludeSystemTables: &opConfig.ExcludeSystemTables,
 		IncludeNotRunning:   &opConfig.IncludeNotRunning,

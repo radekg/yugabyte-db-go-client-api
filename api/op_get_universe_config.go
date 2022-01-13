@@ -6,7 +6,7 @@ import (
 )
 
 // GetUniverseConfig get the placement info and blacklist info of the universe.
-func (c *defaultYBClientAPI) GetUniverseConfig() (*ybApi.GetMasterClusterConfigResponsePB, error) {
+func (c *defaultRpcAPI) GetUniverseConfig() (*ybApi.GetMasterClusterConfigResponsePB, error) {
 	payload := &ybApi.GetMasterClusterConfigRequestPB{}
 	responsePayload := &ybApi.GetMasterClusterConfigResponsePB{}
 	if err := c.connectedClient.Execute(payload, responsePayload); err != nil {

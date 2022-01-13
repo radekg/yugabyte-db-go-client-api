@@ -9,7 +9,7 @@ import (
 )
 
 // DescribeTable returns info on a table in this database.
-func (c *defaultYBClientAPI) GetTabletsForTable(opConfig *configs.OpGetTableLocationsConfig) (*ybApi.GetTableLocationsResponsePB, error) {
+func (c *defaultRpcAPI) GetTabletsForTable(opConfig *configs.OpGetTableLocationsConfig) (*ybApi.GetTableLocationsResponsePB, error) {
 
 	if opConfig.UUID != "" {
 		// we can short circuit everything below:

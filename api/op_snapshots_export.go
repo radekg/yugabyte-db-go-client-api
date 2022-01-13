@@ -20,7 +20,7 @@ type SnapshotExportData struct {
 }
 
 // Export snapshot.
-func (c *defaultYBClientAPI) SnapshotsExport(opConfig *configs.OpSnapshotExportConfig) (*SnapshotExportData, error) {
+func (c *defaultRpcAPI) SnapshotsExport(opConfig *configs.OpSnapshotExportConfig) (*SnapshotExportData, error) {
 
 	ybDbID, err := ybdbid.TryParseFromString(opConfig.SnapshotID)
 	if err != nil {

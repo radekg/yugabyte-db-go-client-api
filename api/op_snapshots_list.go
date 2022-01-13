@@ -8,7 +8,7 @@ import (
 )
 
 // List snapshots.
-func (c *defaultYBClientAPI) SnapshotsList(opConfig *configs.OpSnapshotListConfig) (*ybApi.ListSnapshotsResponsePB, error) {
+func (c *defaultRpcAPI) SnapshotsList(opConfig *configs.OpSnapshotListConfig) (*ybApi.ListSnapshotsResponsePB, error) {
 	payload := &ybApi.ListSnapshotsRequestPB{
 		ListDeletedSnapshots: &opConfig.ListDeletedSnapshots,
 		PrepareForBackup:     &opConfig.PrepareForBackup,

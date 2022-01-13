@@ -8,7 +8,7 @@ import (
 )
 
 // ListTabletServers returns a list of tablet servers or an error if call failed.
-func (c *defaultYBClientAPI) ListTabletServers(opConfig *configs.OpListTabletServersConfig) (*ybApi.ListTabletServersResponsePB, error) {
+func (c *defaultRpcAPI) ListTabletServers(opConfig *configs.OpListTabletServersConfig) (*ybApi.ListTabletServersResponsePB, error) {
 	payload := &ybApi.ListTabletServersRequestPB{
 		PrimaryOnly: utils.PBool(opConfig.PrimaryOnly),
 	}

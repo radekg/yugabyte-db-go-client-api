@@ -10,7 +10,7 @@ import (
 )
 
 // Restore snapshot.
-func (c *defaultYBClientAPI) SnapshotsRestore(opConfig *configs.OpSnapshotRestoreConfig) (*ybApi.RestoreSnapshotResponsePB, error) {
+func (c *defaultRpcAPI) SnapshotsRestore(opConfig *configs.OpSnapshotRestoreConfig) (*ybApi.RestoreSnapshotResponsePB, error) {
 
 	ybDbID, err := ybdbid.TryParseFromString(opConfig.SnapshotID)
 	if err != nil {

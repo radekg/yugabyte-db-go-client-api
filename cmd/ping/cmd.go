@@ -7,6 +7,8 @@ import (
 
 	"github.com/radekg/yugabyte-db-go-client-api/api"
 	"github.com/radekg/yugabyte-db-go-client-api/configs"
+	"github.com/radekg/yugabyte-db-go-client/client"
+	ybClientConfigs "github.com/radekg/yugabyte-db-go-client/configs"
 	"github.com/spf13/cobra"
 )
 
@@ -49,13 +51,17 @@ func processCommand() int {
 		}
 	}
 
-	cliConfig, cliConfigErr := configs.NewYBClientConfigFromCliConfig(commandConfig.MasterHostPort[0], commandConfig)
-	if cliConfigErr != nil {
-		logger.Error("failed creating client configuration", "reason", cliConfigErr)
+	tlsConfig, tlsConfigErr := commandConfig.TLSConfig()
+	if tlsConfigErr != nil {
+		logger.Error("TLS configuration failed", "reason", tlsConfigErr)
 		return 1
 	}
-	cliConfig.MasterHostPort = fmt.Sprintf("%s:%d", opConfig.Host, opConfig.Port)
-	cliClient, err := api.NewYBConnectedClient(cliConfig, logger.Named("client"))
+
+	cliClient, err := client.NewDefaultConnector().Connect(&ybClientConfigs.YBSingleNodeClientConfig{
+		MasterHostPort: fmt.Sprintf("%s:%d", opConfig.Host, opConfig.Port),
+		TLSConfig:      tlsConfig,
+		OpTimeout:      uint32(commandConfig.OpTimeout),
+	})
 	if err != nil {
 		// careful: different than other commands:
 		logger.Error("server not reachable", "reason", err)
@@ -71,7 +77,7 @@ func processCommand() int {
 	}
 	defer cliClient.Close()
 
-	responsePayload, err := cliClient.Ping()
+	responsePayload, err := api.Ping(cliClient)
 	if err != nil {
 		// TODO: LATER: in this case, this may indicate the service unavailability
 		logger.Error("failed reading ping response", "reason", err)

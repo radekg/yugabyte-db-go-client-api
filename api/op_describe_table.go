@@ -6,7 +6,7 @@ import (
 )
 
 // DescribeTable returns info on a table in this database.
-func (c *defaultYBClientAPI) DescribeTable(opConfig *configs.OpGetTableSchemaConfig) (*ybApi.GetTableSchemaResponsePB, error) {
+func (c *defaultRpcAPI) DescribeTable(opConfig *configs.OpGetTableSchemaConfig) (*ybApi.GetTableSchemaResponsePB, error) {
 	if opConfig.UUID != "" {
 		// we can short circuit everything below:
 		return c.getTableSchemaByUUID([]byte(opConfig.UUID))

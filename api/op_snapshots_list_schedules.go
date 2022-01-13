@@ -8,7 +8,7 @@ import (
 )
 
 // List snapshots.
-func (c *defaultYBClientAPI) SnapshotsListSchedules(opConfig *configs.OpSnapshotListSchedulesConfig) (*ybApi.ListSnapshotSchedulesResponsePB, error) {
+func (c *defaultRpcAPI) SnapshotsListSchedules(opConfig *configs.OpSnapshotListSchedulesConfig) (*ybApi.ListSnapshotSchedulesResponsePB, error) {
 	payload := &ybApi.ListSnapshotSchedulesRequestPB{}
 	if len(opConfig.ScheduleID) > 0 {
 		ybDbID, err := ybdbid.TryParseFromString(opConfig.ScheduleID)

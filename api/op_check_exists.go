@@ -8,7 +8,7 @@ import (
 )
 
 // CheckExists returns table schema if table exists or an error.
-func (c *defaultYBClientAPI) CheckExists(opConfig *configs.OpGetTableSchemaConfig) (*ybApi.GetTableSchemaResponsePB, error) {
+func (c *defaultRpcAPI) CheckExists(opConfig *configs.OpGetTableSchemaConfig) (*ybApi.GetTableSchemaResponsePB, error) {
 	payload := &ybApi.GetTableSchemaRequestPB{
 		Table: &ybApi.TableIdentifierPB{},
 	}

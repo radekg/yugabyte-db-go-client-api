@@ -3,16 +3,13 @@ package api
 import (
 	"github.com/hashicorp/go-hclog"
 	"github.com/radekg/yugabyte-db-go-client-api/configs"
-	"github.com/radekg/yugabyte-db-go-client/client/base"
-	ybClientConfigs "github.com/radekg/yugabyte-db-go-client/configs"
+	"github.com/radekg/yugabyte-db-go-client/client"
 	ybApi "github.com/radekg/yugabyte-db-go-proto/v2/yb/api"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
-// YBClientAPI is a client implementing the CLI functionality.
-type YBClientAPI interface {
-	Close() error
-
+// YBRpcAPI is a client implementing the CLI functionality.
+type YBRpcAPI interface {
 	CheckExists(*configs.OpGetTableSchemaConfig) (*ybApi.GetTableSchemaResponsePB, error)
 	DescribeTable(*configs.OpGetTableSchemaConfig) (*ybApi.GetTableSchemaResponsePB, error)
 
@@ -53,42 +50,21 @@ type YBClientAPI interface {
 	SnapshotsRestore(*configs.OpSnapshotRestoreConfig) (*ybApi.RestoreSnapshotResponsePB, error)
 
 	YsqlCatalogVersion() (*ybApi.GetYsqlCatalogConfigResponsePB, error)
-
-	OnConnected() <-chan struct{}
-	OnConnectError() <-chan error
 }
 
-type defaultYBClientAPI struct {
-	connectedClient base.YBConnectedClient
+type defaultRpcAPI struct {
+	connectedClient client.YBClient
 	logger          hclog.Logger
 }
 
-// NewYBConnectedClient returns a configured instance of the default CLI client.
-func NewYBConnectedClient(cfg *ybClientConfigs.YBClientConfig, logger hclog.Logger) (YBClientAPI, error) {
-	connectedClient, err := base.Connect(cfg, logger)
-	if err != nil {
-		return nil, err
-	}
-	return &defaultYBClientAPI{
-		connectedClient: connectedClient,
+// NewRpcAPI returns a configured instance of the default CLI client.
+func NewRpcAPI(c client.YBClient, logger hclog.Logger) YBRpcAPI {
+	return &defaultRpcAPI{
+		connectedClient: c,
 		logger:          logger,
-	}, nil
+	}
 }
 
-func (c *defaultYBClientAPI) Close() error {
-	return c.connectedClient.Close()
-}
-
-func (c *defaultYBClientAPI) Execute(input, output protoreflect.ProtoMessage) error {
+func (c *defaultRpcAPI) Execute(input, output protoreflect.ProtoMessage) error {
 	return c.connectedClient.Execute(input, output)
-}
-
-// OnConnected returns a channel which closed when the client is connected.
-func (c *defaultYBClientAPI) OnConnected() <-chan struct{} {
-	return c.connectedClient.OnConnected()
-}
-
-// OnConnectError returns a channel which will return an error if connect fails.
-func (c *defaultYBClientAPI) OnConnectError() <-chan error {
-	return c.connectedClient.OnConnectError()
 }
