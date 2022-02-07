@@ -16,7 +16,7 @@ func (c *defaultRpcAPI) SnapshotsCreate(opConfig *configs.OpSnapshotCreateConfig
 	if len(opConfig.ScheduleID) > 0 {
 		// short circuit
 
-		ybDbID, err := ybdbid.TryParseFromString(opConfig.ScheduleID)
+		ybDbID, err := ybdbid.TryParseSnapshotIDFromString(opConfig.ScheduleID)
 		if err != nil {
 			c.logger.Error("given schedule id is not valid",
 				"original-value", opConfig.ScheduleID,

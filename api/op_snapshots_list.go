@@ -15,7 +15,7 @@ func (c *defaultRpcAPI) SnapshotsList(opConfig *configs.OpSnapshotListConfig) (*
 	}
 	if len(opConfig.SnapshotID) > 0 {
 
-		ybDbID, err := ybdbid.TryParseFromString(opConfig.SnapshotID)
+		ybDbID, err := ybdbid.TryParseSnapshotIDFromString(opConfig.SnapshotID)
 		if err != nil {
 			c.logger.Error("given snapshot id is not valid",
 				"original-value", opConfig.SnapshotID,
