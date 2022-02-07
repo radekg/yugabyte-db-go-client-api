@@ -11,7 +11,7 @@ import (
 func (c *defaultRpcAPI) SnapshotsListSchedules(opConfig *configs.OpSnapshotListSchedulesConfig) (*ybApi.ListSnapshotSchedulesResponsePB, error) {
 	payload := &ybApi.ListSnapshotSchedulesRequestPB{}
 	if len(opConfig.ScheduleID) > 0 {
-		ybDbID, err := ybdbid.TryParseFromString(opConfig.ScheduleID)
+		ybDbID, err := ybdbid.TryParseSnapshotIDFromString(opConfig.ScheduleID)
 		if err != nil {
 			c.logger.Error("given schedule id is not valid",
 				"original-value", opConfig.ScheduleID,

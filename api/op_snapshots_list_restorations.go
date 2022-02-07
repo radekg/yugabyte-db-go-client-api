@@ -12,7 +12,7 @@ func (c *defaultRpcAPI) SnapshotsListRestorations(opConfig *configs.OpSnapshotLi
 	useSnapshotID := []byte{}
 	useRestorationID := []byte{}
 	if opConfig.SnapshotID != "" {
-		ybDbID, err := ybdbid.TryParseFromString(opConfig.SnapshotID)
+		ybDbID, err := ybdbid.TryParseSnapshotIDFromString(opConfig.SnapshotID)
 		if err != nil {
 			c.logger.Error("given snapshot id is not valid",
 				"original-value", opConfig.SnapshotID,
@@ -23,7 +23,7 @@ func (c *defaultRpcAPI) SnapshotsListRestorations(opConfig *configs.OpSnapshotLi
 	}
 
 	if opConfig.RestorationID != "" {
-		ybDbID, err := ybdbid.TryParseFromString(opConfig.RestorationID)
+		ybDbID, err := ybdbid.TryParseSnapshotIDFromString(opConfig.RestorationID)
 		if err != nil {
 			c.logger.Error("given snapshot id is not valid",
 				"original-value", opConfig.SnapshotID,

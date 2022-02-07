@@ -12,7 +12,7 @@ import (
 // Restore snapshot.
 func (c *defaultRpcAPI) SnapshotsRestore(opConfig *configs.OpSnapshotRestoreConfig) (*ybApi.RestoreSnapshotResponsePB, error) {
 
-	ybDbID, err := ybdbid.TryParseFromString(opConfig.SnapshotID)
+	ybDbID, err := ybdbid.TryParseSnapshotIDFromString(opConfig.SnapshotID)
 	if err != nil {
 		c.logger.Error("given snapshot id is not valid",
 			"original-value", opConfig.SnapshotID,

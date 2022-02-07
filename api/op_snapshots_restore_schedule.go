@@ -34,9 +34,9 @@ func (c *defaultRpcAPI) SnapshotsRestoreSchedule(opConfig *configs.OpSnapshotRes
 		return nil, err
 	}
 
-	suitableYbDbID, err := ybdbid.TryParseFromBytes(suitableSnapshotID)
+	suitableYbDbID, err := ybdbid.TryParseSnapshotIDFromBytes(suitableSnapshotID)
 	if err != nil {
-		c.logger.Error("suitable snapshot id cann't be parsed as YugabyteDB ID",
+		c.logger.Error("suitable snapshot id can't be parsed as YugabyteDB snapshot ID",
 			"bytes", suitableSnapshotID,
 			"reason", err)
 		return nil, err
@@ -117,7 +117,7 @@ func (c *defaultRpcAPI) suitableSnapshotID(scheduleID string, restoreAt uint64) 
 		// only look at first schedule:
 		for _, candidateSnapshot := range schedules.Schedules[0].Snapshots {
 
-			candidateSnapshotYbDbID, err := ybdbid.TryParseFromBytes(candidateSnapshot.Id)
+			candidateSnapshotYbDbID, err := ybdbid.TryParseSnapshotIDFromBytes(candidateSnapshot.Id)
 			if err != nil {
 				c.logger.Error("skipping candidate snapshot with invalid id", "bytes", candidateSnapshot.Id)
 				continue
@@ -144,7 +144,7 @@ func (c *defaultRpcAPI) suitableSnapshotID(scheduleID string, restoreAt uint64) 
 		}
 
 		if lastSnapshotTime > restoreAt {
-			return nil, fmt.Errorf("Cannot restore at %d, last snapshot: %d, snapshots: %+v",
+			return nil, fmt.Errorf("cannot restore at %d, last snapshot: %d, snapshots: %+v",
 				restoreAt, lastSnapshotTime, schedules.Schedules[0].Snapshots)
 		}
 

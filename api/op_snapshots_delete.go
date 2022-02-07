@@ -10,7 +10,7 @@ import (
 // Delete snapshot.
 func (c *defaultRpcAPI) SnapshotsDelete(opConfig *configs.OpSnapshotDeleteConfig) (*ybApi.DeleteSnapshotResponsePB, error) {
 
-	ybDbID, err := ybdbid.TryParseFromString(opConfig.SnapshotID)
+	ybDbID, err := ybdbid.TryParseSnapshotIDFromString(opConfig.SnapshotID)
 	if err != nil {
 		c.logger.Error("given snapshot id is not valid",
 			"original-value", opConfig.SnapshotID,

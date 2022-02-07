@@ -22,7 +22,7 @@ type SnapshotExportData struct {
 // Export snapshot.
 func (c *defaultRpcAPI) SnapshotsExport(opConfig *configs.OpSnapshotExportConfig) (*SnapshotExportData, error) {
 
-	ybDbID, err := ybdbid.TryParseFromString(opConfig.SnapshotID)
+	ybDbID, err := ybdbid.TryParseSnapshotIDFromString(opConfig.SnapshotID)
 	if err != nil {
 		c.logger.Error("given snapshot id is not valid",
 			"original-value", opConfig.SnapshotID,

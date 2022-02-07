@@ -10,7 +10,7 @@ import (
 // Delete snapshot.
 func (c *defaultRpcAPI) SnapshotsDeleteSchedule(opConfig *configs.OpSnapshotDeleteScheduleConfig) (*ybApi.DeleteSnapshotScheduleResponsePB, error) {
 
-	ybDbID, err := ybdbid.TryParseFromString(opConfig.ScheduleID)
+	ybDbID, err := ybdbid.TryParseSnapshotIDFromString(opConfig.ScheduleID)
 	if err != nil {
 		c.logger.Error("given schedule id is not valid",
 			"original-value", opConfig.ScheduleID,
