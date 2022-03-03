@@ -51,10 +51,10 @@ topExit:
 			}
 		}
 		switch *masterRegistration.Role {
-		case ybApi.RaftPeerPB_LEADER:
+		case ybApi.PeerRole_LEADER:
 			registration = masterRegistration
 			break topExit
-		case ybApi.RaftPeerPB_FOLLOWER:
+		case ybApi.PeerRole_FOLLOWER:
 			registration = masterRegistration
 			break topExit
 		default:

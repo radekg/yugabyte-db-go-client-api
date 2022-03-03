@@ -74,7 +74,7 @@ func (c *defaultRpcAPI) PreProcessSnapshotsImportFromBytes(opConfig *configs.OpS
 
 		sysRowEntry := backupEntry.Entry
 		switch *sysRowEntry.Type {
-		case ybApi.SysRowEntry_NAMESPACE:
+		case ybApi.SysRowEntryType_NAMESPACE:
 
 			meta := &ybApi.SysNamespaceEntryPB{}
 			if err := utils.DeserializeProto(sysRowEntry.Data, meta); err != nil {
@@ -90,7 +90,7 @@ func (c *defaultRpcAPI) PreProcessSnapshotsImportFromBytes(opConfig *configs.OpS
 				sysRowEntry.Data = metaBytes
 			}
 
-		case ybApi.SysRowEntry_TABLE:
+		case ybApi.SysRowEntryType_TABLE:
 
 			if wasTableRenamed && tableName.TableName == "" {
 				return nil, fmt.Errorf("there is no name for table (including indexes) number: %d", tableIndex)
